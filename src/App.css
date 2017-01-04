@@ -22,3 +22,10 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.Game {
+  width: 20px;
+  height: 20px;
+  background-color: #222;
+  display: inline-block;
+}
