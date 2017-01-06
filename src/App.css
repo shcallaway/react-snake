@@ -24,8 +24,7 @@
 }
 
 .Game {
-  width: 20px;
-  height: 20px;
-  background-color: #222;
-  display: inline-block;
+  width: 600px;
+  height: 400px;
+  border: 1px solid #000000;
 }

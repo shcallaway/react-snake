@@ -19,40 +19,55 @@ class Game extends Component {
     super();
 
     this.state = {
-      head: [0, 0]
+      x: 31,
+      y: 24,
+      dir: 39
     }
   }
 
-  move(direction) {
-    var head = this.state.head;
-    var x = head[0], y = head[1];
+  move() {
+    var dir = this.state.dir;
+    var x = this.state.x, y = this.state.y;
 
-    switch (direction) {
+    switch (dir) {
       case 37: x--; break; // left
-      case 38: x++; break; // right
-      case 39: y++; break; // up
-      case 40: y--; break; // down
+      case 38: y--; break; // up
+      case 39: x++; break; // right
+      case 40: y++; break; // down
       default: return;
     }
 
     console.log('x: ' + x + ', y: ' + y);
-    this.setState({head: [x, y]});
+    this.setState({x: x, y: y});
+    this.drawSnake();
   }
 
   componentDidMount() {
     document.addEventListener("keydown", e => this.handleKeyPress(e), false);
+    setInterval(this.move.bind(this), 1000);
   }
 
   handleKeyPress(e) {
     var directionalKey = KEYCODES.indexOf(e.keyCode) == -1 ? false : true;
 
     if (directionalKey) {
-      this.move(e.keyCode)
+      this.setState({dir: e.keyCode})
     }
   }
 
+  drawSnake() {
+    var x = this.state.x, y = this.state.y;
+
+    var c = document.getElementsByClassName("Game")[0];
+    var ctx = c.getContext("2d");
+
+    ctx.moveTo(x, y)
+    ctx.lineTo(x + 1, y + 1)
+    ctx.stroke();
+  }
+
   render() {
-    return <div className="Game" />
+    return <canvas className="Game"></canvas>
   }
 }
 
