@@ -21,7 +21,10 @@ class Game extends Component {
       dir: 39,
       head: [10, 10],
       tail: [],
-      max_len: 30
+      max_len: 200,
+      c_width: 600,
+      c_height: 400,
+      interval: null
     }
   }
 
@@ -43,9 +46,8 @@ class Game extends Component {
       default: return;
     }
 
-    // update the snake head
     this.setState({head: [x, y]});
-
+    this.checkForCollision();
     this.drawSnake();
   }
 
@@ -66,7 +68,8 @@ class Game extends Component {
     document.addEventListener("keydown", e => this.handleKeyPress(e), false);
 
     // get the snake moving along
-    setInterval(this.move.bind(this), 50);
+    var interval = setInterval(this.move.bind(this), 50);
+    this.setState({interval: interval})
   }
 
   handleKeyPress(e) {
@@ -84,7 +87,7 @@ class Game extends Component {
     var ctx = c.getContext("2d");
 
     // clear the previous canvas and set up the new one
-    var c_width = 600, c_height = 400;
+    var c_width = this.state.c_width, c_height = this.state.c_height;
     ctx.canvas.width = c_width, ctx.canvas.height = c_height;
     ctx.clearRect(0, 0, c_width, c_height);
 
@@ -104,9 +107,56 @@ class Game extends Component {
     }
   }
 
-  render() {
-    return <canvas className="Game"></canvas>
+  checkForCollision() {
+
+    if (this.wallCollision() || this.tailCollision()) this.gameOver();
   }
+
+  wallCollision() {
+
+    var c_width = this.state.c_width, c_height = this.state.c_height;
+    var x = this.state.head[0], y = this.state.head[1];
+    return (x >= c_width || x <= 0 || y >= c_height || y <= 0);
+
+  }
+
+  tailCollision() {
+
+    var x = this.state.head[0], y = this.state.head[1];
+    var tail = this.state.tail;
+
+    for (var i = 0; i < tail.length; i++) {
+      var tx = tail[i][0], ty = tail[i][1];
+      if (x == tx && y == ty) {
+        return true;
+      }
+    }
+
+    return false;
+
+  }
+
+  gameOver() {
+    var interval = this.state.interval;
+    clearInterval(interval);
+    this.setState({interval: null});
+  }
+
+  render() {
+    var interval = this.state.interval;
+    var gameOver = (interval == null ? true : false);
+    var message = (gameOver == true ? <GameOverMessage /> : null )
+    return (
+      <div>
+        <canvas className="Game"></canvas>
+        {message}
+      </div>
+    );
+  }
+}
+
+function GameOverMessage(props) {
+  return <div>Game over.</div>;
 }
 
 export default App;
