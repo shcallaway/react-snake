@@ -13,7 +13,7 @@ class App extends Component {
   }
 }
 
-var KEYCODES = [37, 38, 39, 40]
+var KEYCODES = [37, 38, 39, 40], INTERVAL = null;
 
 // this doesn't need to be a React component, right? nothing to render.
 class Snake {
@@ -108,7 +108,6 @@ class Game extends Component {
     this.state = {
       snake: new Snake(),
       canvas: new Canvas(),
-      interval: null,
       speed: 10
     }
   }
@@ -141,20 +140,18 @@ class Game extends Component {
 
     // might want to refactor speed so it behaves more logically
 
-    var interval = setInterval(function() {
+    INTERVAL = setInterval(function() {
       snake.move();
       canvas.draw(snake);
       this.checkForCollision();
     }.bind(this), speed, snake, canvas);
 
-    this.setState({interval: interval})
-
   }
 
   over() {
 
-    var interval = this.state.interval;
-    clearInterval(interval);
+    clearInterval(INTERVAL);
+    INTERVAL = null;
     console.log('Game over.')
 
   }
@@ -198,8 +195,17 @@ class Game extends Component {
   }
 }
 
-// function GameOverMessage(props) {
-//   return <div>Game over.</div>;
-// }
+function StartMenu(props) {
+  return (
+    <div>
+      <p>React Snake</p>
+      <button>Start</button>
+    </div>
+  );
+}
+
+function GameOverMessage(props) {
+  return <div>Game over.</div>;
+}
 
 export default App;
