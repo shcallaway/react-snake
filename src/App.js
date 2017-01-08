@@ -6,39 +6,33 @@ import $ from 'jquery';
 class App extends Component {
   render() {
     return (
-      <Game />
+      <div>
+        <Game />
+      </div>
     );
   }
 }
 
 var KEYCODES = [37, 38, 39, 40]
 
-class Game extends Component {
+// this doesn't need to be a React component, right? nothing to render.
+class Snake {
+  
   constructor() {
-    super();
 
-    this.state = {
-      dir: 39,
-      head: [10, 10],
-      tail: [],
-      max_len: 200,
-      c_width: 600,
-      c_height: 400,
-      interval: null
-    }
+    this.body = [[10, 10]];
+    this.max_length = 50;
+    this.direction = 39;
+  
   }
 
   move() {
-    var dir = this.state.dir;
-    var x = this.state.head[0];
-    var y = this.state.head[1];
+  
+    // retrieve current head of the snake
+    var x = this.body[0][0], y = this.body[0][1];
 
-    // add the current head to the tail
-    var coords = [x, y]
-    this.growTail(coords)
-
-    // determine which way to go
-    switch (dir) {
+    // increment appropriate coordinate
+    switch (this.direction) {
       case 37: x--; break; // left
       case 38: y--; break; // up
       case 39: x++; break; // right
@@ -46,87 +40,148 @@ class Game extends Component {
       default: return;
     }
 
-    this.setState({head: [x, y]});
-    this.checkForCollision();
-    this.drawSnake();
+    this.grow([x, y]);
+
+  }  
+
+  grow(new_coordinates) {
+
+    var body = this.body;
+
+    // adds new coordinates to front of array
+    body.unshift(new_coordinates);
+
+    // removes old coordinates from end of array if necessary
+    if (body.length == this.max_length) body.pop();
+
+    this.body = body;
+  
   }
+}
 
-  growTail(coords) {
-    var tail = this.state.tail;
-    var max_len = this.state.max_len;
+class Canvas extends Component {
 
-    // add coords to the front of the tail
-    tail.unshift(coords)
+  constructor() {
+    
+    super();
 
-    // remove coords from tail end if necessary
-    if (tail.length == max_len) tail.pop()
-
-    this.setState({tail: tail})
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", e => this.handleKeyPress(e), false);
-
-    // get the snake moving along
-    var interval = setInterval(this.move.bind(this), 50);
-    this.setState({interval: interval})
-  }
-
-  handleKeyPress(e) {
-    // determine if the keyCode represents a directional key
-    var directionalKey = KEYCODES.indexOf(e.keyCode) == -1 ? false : true;
-
-    if (directionalKey) {
-      this.setState({dir: e.keyCode})
+    this.state = {
+      width: 600,
+      height: 400,
     }
+
   }
 
-  drawSnake() {
+  draw(snake) {
+
     // grab the canvas and the context
-    var c = document.getElementsByClassName("Game")[0];
+    var c = document.getElementsByClassName("Canvas")[0];
     var ctx = c.getContext("2d");
 
     // clear the previous canvas and set up the new one
-    var c_width = this.state.c_width, c_height = this.state.c_height;
-    ctx.canvas.width = c_width, ctx.canvas.height = c_height;
-    ctx.clearRect(0, 0, c_width, c_height);
+    var width = this.state.width, height = this.state.height;
+    ctx.canvas.width = width, ctx.canvas.height = height;
+    ctx.clearRect(0, 0, width, height);
 
-    // draw the head
-    var x = this.state.head[0], y = this.state.head[1];
-    ctx.moveTo(x, y)
-    ctx.lineTo(x + 1, y + 1)
-    ctx.stroke();
-
-    // draw the tail
-    var tail = this.state.tail;
-    for (var i = 0; i < tail.length; i++) {
-      var x = tail[i][0], y = tail[i][1];
+    var body = snake.body;
+    for (var i = 0; i < body.length; i++) {
+      var x = body[i][0], y = body[i][1];
       ctx.moveTo(x, y)
       ctx.lineTo(x + 1, y + 1)
       ctx.stroke();
     }
+
+  }
+
+  render() {
+
+    return <canvas className="Canvas"></canvas>
+
+  }
+
+}
+
+class Game extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      snake: new Snake(),
+      canvas: new Canvas(),
+      interval: null,
+      speed: 10
+    }
+  }
+
+
+  componentDidMount() {
+    
+    document.addEventListener("keydown", e => this.handleKeyPress(e), false);
+    this.start();
+
+  }
+
+  handleKeyPress(e) {
+
+    // determine if event keyCode represents a directional key
+    var directionalKey = KEYCODES.indexOf(e.keyCode) == -1 ? false : true;
+
+    if (directionalKey) {
+      var snake = this.state.snake;
+      snake.direction = e.keyCode;
+    }
+
+  }
+
+  start() {
+
+    var snake = this.state.snake;
+    var canvas = this.state.canvas;
+    var speed = this.state.speed;
+
+    // might want to refactor speed so it behaves more logically
+
+    var interval = setInterval(function() {
+      snake.move();
+      canvas.draw(snake);
+      this.checkForCollision();
+    }.bind(this), speed, snake, canvas);
+
+    this.setState({interval: interval})
+
+  }
+
+  over() {
+
+    var interval = this.state.interval;
+    clearInterval(interval);
+    console.log('Game over.')
+
   }
 
   checkForCollision() {
 
-    if (this.wallCollision() || this.tailCollision()) this.gameOver();
+    if (this.checkForWallCollision() || this.checkForTailCollision()) this.over();
+
   }
 
-  wallCollision() {
+  checkForWallCollision() {
 
-    var c_width = this.state.c_width, c_height = this.state.c_height;
-    var x = this.state.head[0], y = this.state.head[1];
+    var canvas = this.state.canvas;
+    var c_width = canvas.state.width, c_height = canvas.state.height;
+    var x = this.state.snake.body[0][0], y = this.state.snake.body[0][1];
     return (x >= c_width || x <= 0 || y >= c_height || y <= 0);
 
   }
 
-  tailCollision() {
+  checkForTailCollision() {
 
-    var x = this.state.head[0], y = this.state.head[1];
-    var tail = this.state.tail;
+    var body = this.state.snake.body;
+    var x = body[0][0], y = body[0][1];
 
-    for (var i = 0; i < tail.length; i++) {
-      var tx = tail[i][0], ty = tail[i][1];
+    // start at index 1 to skip the head coordinate pair
+    for (var i = 1; i < body.length; i++) {
+      var tx = body[i][0], ty = body[i][1];
       if (x == tx && y == ty) {
         return true;
       }
@@ -136,27 +191,15 @@ class Game extends Component {
 
   }
 
-  gameOver() {
-    var interval = this.state.interval;
-    clearInterval(interval);
-    this.setState({interval: null});
-  }
-
   render() {
-    var interval = this.state.interval;
-    var gameOver = (interval == null ? true : false);
-    var message = (gameOver == true ? <GameOverMessage /> : null )
     return (
-      <div>
-        <canvas className="Game"></canvas>
-        {message}
-      </div>
+      <Canvas />
     );
   }
 }
 
-function GameOverMessage(props) {
-  return <div>Game over.</div>;
-}
+// function GameOverMessage(props) {
+//   return <div>Game over.</div>;
+// }
 
 export default App;

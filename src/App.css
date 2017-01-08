@@ -23,6 +23,7 @@
   to { transform: rotate(360deg); }
 }
 
-.Game {
+.Canvas {
+  vertical-align: center;
   border: 1px solid #000000;
 }
