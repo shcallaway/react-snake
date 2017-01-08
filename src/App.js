@@ -76,7 +76,7 @@ class Canvas extends Component {
   draw(snake) {
 
     // grab the canvas and the context
-    var c = document.getElementsByClassName("Canvas")[0];
+    var c = document.getElementsByClassName("canvas")[0];
     var ctx = c.getContext("2d");
 
     // clear the previous canvas and set up the new one
@@ -96,7 +96,7 @@ class Canvas extends Component {
 
   render() {
 
-    return <canvas className="Canvas"></canvas>
+    return <canvas className="canvas"></canvas>
 
   }
 
@@ -116,17 +116,21 @@ class Game extends Component {
 
   componentDidMount() {
     
+    // add listener for all key presses
     document.addEventListener("keydown", e => this.handleKeyPress(e), false);
-    this.begin();
 
   }
 
   handleKeyPress(e) {
 
-    // determine if event keyCode represents a directional key
-    var directionalKey = KEYCODES.indexOf(e.keyCode) == -1 ? false : true;
+    // if game is inactive and key pressed was space bar, begin
+    var space_bar = (e.keyCode == 32), inactive = (this.state.status == 0);
+    if (space_bar && inactive ) this.begin();
 
-    if (directionalKey) {
+    // determine if event keyCode represents a directional key
+    var dir_key = KEYCODES.indexOf(e.keyCode) == -1 ? false : true;
+
+    if (dir_key) {
       var snake = this.state.snake;
       snake.direction = e.keyCode;
     }
@@ -198,20 +202,19 @@ class Game extends Component {
 
     switch (status) {
       case 0: // inactive (display tutorial message)
-        var message = <TutorialMessage />;
-        break;
+        var message = <TutorialMsg />; break;
       case 1: // active (no messages)
-        var message = null;
-        break; 
+        var message = null; break; 
       case 2: // over (display game over message)
-        var message = <ConcludingMessage />;
-        break; 
+        var message = <GameOverMsg />; break; 
       default: return;
     }
 
+    var canvas = <Canvas />;
+
     return (
       <div>
-        <Canvas />
+        {canvas}
         {message}
       </div>
     );
@@ -227,32 +230,19 @@ function StartMenu(props) {
   );
 }
 
-function TutorialMessage(props) {
+function TutorialMsg(props) {
   return (
-    <div>
-      <div>
-        <p>
-          Use the arrow keys to change direction.<br />
-          Avoid contact with walls and yourself.<br />
-          Gather as much candy as possible.<br />
-        </p>
-      </div>
-      <div>
-        <StartButton />
-      </div>
+    <div className='tutorial-msg'>
+      <p>1. Use the arrow keys to change direction.<br />
+      2. Avoid contact with walls and yourself.<br />
+      3. Gather as much candy as possible.</p>
+      <p>Press the space bar to begin.</p>
     </div>
   );
 }
 
-// somehow make the button trigger Game.begin() onClick
-function StartButton(props) {
-  return (
-    <button>Begin</button>
-  );
-}
-
-function ConcludingMessage(props) {
-  return <div>Game over.</div>;
+function GameOverMsg(props) {
+  return <div className='game-over-msg'>Game over.</div>;
 }
 
 export default App;

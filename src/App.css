@@ -23,7 +23,12 @@
   to { transform: rotate(360deg); }
 }
 
-.Canvas {
-  vertical-align: center;
+.canvas {
   border: 1px solid #000000;
+}
+
+.game-over-msg {
+}
+
+.tutorial-msg {
 }
