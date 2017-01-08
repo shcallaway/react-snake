@@ -13,7 +13,8 @@ class App extends Component {
   }
 }
 
-var KEYCODES = [37, 38, 39, 40], INTERVAL = null;
+var KEYCODES = [37, 38, 39, 40];
+var INTERVAL = null;
 
 // this doesn't need to be a React component, right? nothing to render.
 class Snake {
@@ -21,7 +22,7 @@ class Snake {
   constructor() {
 
     this.body = [[10, 10]];
-    this.max_length = 50;
+    this.max_length = 100;
     this.direction = 39;
   
   }
@@ -108,15 +109,15 @@ class Game extends Component {
     this.state = {
       snake: new Snake(),
       canvas: new Canvas(),
-      speed: 10
+      speed: 10,
+      status: 0 // inactive
     }
   }
-
 
   componentDidMount() {
     
     document.addEventListener("keydown", e => this.handleKeyPress(e), false);
-    this.start();
+    this.begin();
 
   }
 
@@ -132,7 +133,7 @@ class Game extends Component {
 
   }
 
-  start() {
+  begin() {
 
     var snake = this.state.snake;
     var canvas = this.state.canvas;
@@ -146,19 +147,22 @@ class Game extends Component {
       this.checkForCollision();
     }.bind(this), speed, snake, canvas);
 
+    this.setState({status: 1}); // active
+
   }
 
-  over() {
+  end() {
 
     clearInterval(INTERVAL);
     INTERVAL = null;
-    console.log('Game over.')
+
+    this.setState({status: 2}); // over
 
   }
 
   checkForCollision() {
 
-    if (this.checkForWallCollision() || this.checkForTailCollision()) this.over();
+    if (this.checkForWallCollision() || this.checkForTailCollision()) this.end();
 
   }
 
@@ -189,8 +193,27 @@ class Game extends Component {
   }
 
   render() {
+
+    var status = this.state.status;
+
+    switch (status) {
+      case 0: // inactive (display tutorial message)
+        var message = <TutorialMessage />;
+        break;
+      case 1: // active (no messages)
+        var message = null;
+        break; 
+      case 2: // over (display game over message)
+        var message = <ConcludingMessage />;
+        break; 
+      default: return;
+    }
+
     return (
-      <Canvas />
+      <div>
+        <Canvas />
+        {message}
+      </div>
     );
   }
 }
@@ -204,7 +227,31 @@ function StartMenu(props) {
   );
 }
 
-function GameOverMessage(props) {
+function TutorialMessage(props) {
+  return (
+    <div>
+      <div>
+        <p>
+          Use the arrow keys to change direction.<br />
+          Avoid contact with walls and yourself.<br />
+          Gather as much candy as possible.<br />
+        </p>
+      </div>
+      <div>
+        <StartButton />
+      </div>
+    </div>
+  );
+}
+
+// somehow make the button trigger Game.begin() onClick
+function StartButton(props) {
+  return (
+    <button>Begin</button>
+  );
+}
+
+function ConcludingMessage(props) {
   return <div>Game over.</div>;
 }
 
