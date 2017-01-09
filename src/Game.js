@@ -79,6 +79,8 @@ class Game extends Component {
         this.blowUp();
       } else if (collisions.candy(snake, candy)) {
         this.incrementScore();
+        var c_height = canvas.state.height, c_width = canvas.state.width;
+        candy.move(c_width, c_height);
       }
 
     }.bind(this), speed, snake, canvas, score);
