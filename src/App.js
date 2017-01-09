@@ -98,8 +98,7 @@ class CollisionChecker {
 
     var x = snake.body[0][0], y = snake.body[0][1];
     var cx = candy.location[0], cy = candy.location[1];
-
-    if (x === cx && y === cy) this.incrementPoints();
+    return (x === cx && y === cy);
 
   }
 
@@ -182,6 +181,7 @@ class Game extends Component {
       snake: new Snake(),
       canvas: new Canvas(),
       candy: new Candy(),
+      collisions: new CollisionChecker(),
       // points: 0,
       speed: 10,
       status: 0 // inactive
@@ -218,14 +218,21 @@ class Game extends Component {
     var canvas = this.state.canvas;
     var candy = this.state.candy;
     var speed = this.state.speed;
+    var collisions = this.state.collisions;
 
     // might want to refactor speed so it behaves more logically
 
     INTERVAL = setInterval(function() {
+      
       snake.move();
       canvas.draw(snake, candy);
-      this.checkForGameOver();
-      this.checkForCandyCollision();
+
+      if (collisions.walls(snake, canvas) || collisions.tail(snake)) {
+        this.end();
+      } else if (collisions.candy(snake, candy)) {
+        this.incrementPoints();
+      }
+
     }.bind(this), speed, snake, canvas);
 
     this.setState({status: 1}); // active
@@ -240,50 +247,7 @@ class Game extends Component {
     this.setState({status: 2}); // over
 
   }
-
-  checkForGameOver() {
-
-    if (this.checkForWallCollision() || this.checkForTailCollision()) this.end();
-
-  }
-
-  checkForWallCollision() {
-
-    var canvas = this.state.canvas;
-    var c_width = canvas.state.width, c_height = canvas.state.height;
-    var x = this.state.snake.body[0][0], y = this.state.snake.body[0][1];
-    return (x >= c_width || x <= 0 || y >= c_height || y <= 0);
-
-  }
-
-  checkForTailCollision() {
-
-    var body = this.state.snake.body;
-    var x = body[0][0], y = body[0][1];
-
-    // start at index 1 to skip the first coordinate pair (aka the "head")
-    for (var i = 1; i < body.length; i++) {
-      var tx = body[i][0], ty = body[i][1];
-      if (x === tx && y === ty) {
-        return true;
-      }
-    }
-
-    return false;
-
-  }
-
-  checkForCandyCollision() {
-
-    var body = this.state.snake.body;
-    var x = body[0][0], y = body[0][1];
-    var location = this.state.candy.location;
-    var cx = location[0], cy = location[1];
-
-    if (x === cx && y === cy) this.incrementPoints();
-
-  }
-
+  
   incrementPoints() {
 
   }
