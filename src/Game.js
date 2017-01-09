@@ -9,6 +9,7 @@ import Canvas from './Canvas.js';
 import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';
 
 var KEYCODES = [37, 38, 39, 40];
+var SPEEDS = {slow: 30, medium: 20, fast: 10}
 var INTERVAL = null;
 
 class Game extends Component {
@@ -23,7 +24,7 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: 10,
+      speed: SPEEDS.fast,
       status: 0 // {inactive: 0, active: 1, over: 2}
     }
 
@@ -68,15 +69,13 @@ class Game extends Component {
     var collisions = this.state.collisions;
     var score = this.state.score;
 
-    // might want to refactor speed so it behaves more logically
-
     INTERVAL = setInterval(function() {
       
       snake.move();
       canvas.draw(snake, candy);
 
       if (collisions.walls(snake, canvas) || collisions.tail(snake)) {
-        
+
         this.blowUp();
       
       } else if (collisions.candy(snake, candy)) {
@@ -93,6 +92,12 @@ class Game extends Component {
 
     this.setState({status: 1}); // active
 
+  }
+
+  calculateSpeed() {
+
+    return 100 / this.state.speed;
+  
   }
 
   blowUp() {
