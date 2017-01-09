@@ -11,6 +11,7 @@ class App extends Component {
 
 var KEYCODES = [37, 38, 39, 40];
 var INTERVAL = null;
+var POINTS = 0;
 
 // this doesn't need to be a React component, right? nothing to render.
 class Snake {
@@ -49,7 +50,7 @@ class Snake {
     body.unshift(new_coordinates);
 
     // removes old coordinates from end of array if necessary
-    if (body.length == this.max_length) body.pop();
+    if (body.length === this.max_length) body.pop();
 
     this.body = body;
   
@@ -60,16 +61,46 @@ class Candy {
 
   constructor() {
 
-    this.location = [50, 50];
+    // start with a candy that doesn't move or disappear
+    this.location = [200, 10];
 
   }
 
-  setLocation(c_width, c_height) {
+}
 
-    // do a random number calculation for x and y
-    // where x < c_width & > 0 and y < c_height & > 0
+class CollisionChecker {
 
-    this.location = [50, 50]
+  walls(snake, canvas) {
+
+    var c_width = canvas.state.width, c_height = canvas.state.height;
+    var x = snake.body[0][0], y = snake.body[0][1];
+    return (x >= c_width || x <= 0 || y >= c_height || y <= 0);
+
+  }
+
+  tail(snake) {
+
+    var x = snake.body[0][0], y = snake.body[0][1];
+
+    // start at index 1 to skip the first coordinate pair (aka the "head")
+    for (var i = 1; i < snake.body.length; i++) {
+      var tx = snake.body[i][0], ty = snake.body[i][1];
+      if (x === tx && y === ty) {
+        return true;
+      }
+    }
+
+    return false;
+
+  }
+
+  candy(snake, candy) {
+
+    var x = snake.body[0][0], y = snake.body[0][1];
+    var cx = candy.location[0], cy = candy.location[1];
+
+    if (x === cx && y === cy) this.incrementPoints();
+
   }
 
 }
@@ -142,16 +173,20 @@ class Canvas extends Component {
 }
 
 class Game extends Component {
+
   constructor() {
+
     super();
 
     this.state = {
       snake: new Snake(),
       canvas: new Canvas(),
       candy: new Candy(),
+      // points: 0,
       speed: 10,
       status: 0 // inactive
     }
+
   }
 
   componentDidMount() {
@@ -164,11 +199,11 @@ class Game extends Component {
   handleKeyPress(e) {
 
     // if game is inactive and key pressed was space bar, begin
-    var space_bar = (e.keyCode == 32), inactive = (this.state.status == 0);
+    var space_bar = (e.keyCode === 32), inactive = (this.state.status === 0);
     if (space_bar && inactive ) this.begin();
 
     // determine if event keyCode represents a directional key
-    var dir_key = KEYCODES.indexOf(e.keyCode) == -1 ? false : true;
+    var dir_key = KEYCODES.indexOf(e.keyCode) === -1 ? false : true;
 
     if (dir_key) {
       var snake = this.state.snake;
@@ -189,7 +224,8 @@ class Game extends Component {
     INTERVAL = setInterval(function() {
       snake.move();
       canvas.draw(snake, candy);
-      this.checkForCollision();
+      this.checkForGameOver();
+      this.checkForCandyCollision();
     }.bind(this), speed, snake, canvas);
 
     this.setState({status: 1}); // active
@@ -205,7 +241,7 @@ class Game extends Component {
 
   }
 
-  checkForCollision() {
+  checkForGameOver() {
 
     if (this.checkForWallCollision() || this.checkForTailCollision()) this.end();
 
@@ -225,15 +261,30 @@ class Game extends Component {
     var body = this.state.snake.body;
     var x = body[0][0], y = body[0][1];
 
-    // start at index 1 to skip the head coordinate pair
+    // start at index 1 to skip the first coordinate pair (aka the "head")
     for (var i = 1; i < body.length; i++) {
       var tx = body[i][0], ty = body[i][1];
-      if (x == tx && y == ty) {
+      if (x === tx && y === ty) {
         return true;
       }
     }
 
     return false;
+
+  }
+
+  checkForCandyCollision() {
+
+    var body = this.state.snake.body;
+    var x = body[0][0], y = body[0][1];
+    var location = this.state.candy.location;
+    var cx = location[0], cy = location[1];
+
+    if (x === cx && y === cy) this.incrementPoints();
+
+  }
+
+  incrementPoints() {
 
   }
 
@@ -252,14 +303,23 @@ class Game extends Component {
     }
 
     var canvas = <Canvas />;
+    var score = <Score />
+    // var points = this.state.points;
 
     return (
       <div className="main-container">
         {canvas}
         {message}
+        {score}
       </div>
     );
   }
+}
+
+function Score(props) {
+  return (
+    <div>{POINTS}</div>
+  );
 }
 
 function StartMenu(props) {
