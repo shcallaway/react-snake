@@ -13,6 +13,7 @@ class CollisionChecker {
     var x = snake.body[0][0], y = snake.body[0][1];
 
     // start at index 1 to skip the first coordinate pair (aka the "head")
+    
     for (var i = 1; i < snake.body.length; i++) {
       var tx = snake.body[i][0], ty = snake.body[i][1];
       if (x === tx && y === ty) {

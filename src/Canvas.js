@@ -54,6 +54,7 @@ class Canvas extends Component {
     }
 
     // draw candy as a rectangle
+    
     var x = candy.location[0], y = candy.location[1];
     ctx.rect(x, y, 10,10);
     ctx.stroke();
