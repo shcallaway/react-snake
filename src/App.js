@@ -9,14 +9,20 @@ import Candy from './Candy.js';
 import Canvas from './Canvas.js';
 
 class App extends Component {
+  
   render() {
-    return <Game />;
+
+    return ( 
+      <div>
+        <Game />
+      </div>
+    );
+  
   }
 }
 
 var KEYCODES = [37, 38, 39, 40];
 var INTERVAL = null;
-var POINTS = 0;
 
 class Game extends Component {
 
@@ -29,6 +35,7 @@ class Game extends Component {
       canvas: new Canvas(),
       candy: new Candy(),
       collisions: new CollisionChecker(),
+      score: 0,
       // points: 0,
       speed: 10,
       status: 0 // inactive
@@ -38,7 +45,6 @@ class Game extends Component {
 
   componentDidMount() {
     
-    // add listener for all key presses
     document.addEventListener("keydown", e => this.handleKeyPress(e), false);
 
   }
@@ -46,10 +52,12 @@ class Game extends Component {
   handleKeyPress(e) {
 
     // if game is inactive and key pressed was space bar, begin
+    
     var space_bar = (e.keyCode === 32), inactive = (this.state.status === 0);
     if (space_bar && inactive ) this.begin();
 
     // determine if event keyCode represents a directional key
+
     var dir_key = KEYCODES.indexOf(e.keyCode) === -1 ? false : true;
 
     if (dir_key) {
@@ -66,6 +74,7 @@ class Game extends Component {
     var candy = this.state.candy;
     var speed = this.state.speed;
     var collisions = this.state.collisions;
+    var score = this.state.score;
 
     // might want to refactor speed so it behaves more logically
 
@@ -75,18 +84,18 @@ class Game extends Component {
       canvas.draw(snake, candy);
 
       if (collisions.walls(snake, canvas) || collisions.tail(snake)) {
-        this.end();
+        this.blowUp();
       } else if (collisions.candy(snake, candy)) {
-        this.incrementPoints();
+        this.incrementScore();
       }
 
-    }.bind(this), speed, snake, canvas);
+    }.bind(this), speed, snake, canvas, score);
 
     this.setState({status: 1}); // active
 
   }
 
-  end() {
+  blowUp() {
 
     clearInterval(INTERVAL);
     INTERVAL = null;
@@ -95,7 +104,14 @@ class Game extends Component {
 
   }
 
-  incrementPoints() {
+  incrementScore() {
+
+    // could use jquery here
+
+    var score = this.state.score + 1;
+    this.setState({score: score});
+    var s = document.getElementsByClassName("score")[0];
+    s.innerHTML = score;
 
   }
 
@@ -115,7 +131,6 @@ class Game extends Component {
 
     var canvas = <Canvas />;
     var score = <Score />
-    // var points = this.state.points;
 
     return (
       <div className="main-container">
@@ -128,21 +143,26 @@ class Game extends Component {
 }
 
 function Score(props) {
+   
   return (
-    <div>{POINTS}</div>
-  );
+    <p className="score"></p>
+  ); 
+
 }
 
 function StartMenu(props) {
+
   return (
     <div>
       <p>React Snake</p>
       <button>Start</button>
     </div>
   );
+
 }
 
 function TutorialMsg(props) {
+
   return (
     <div className='tutorial-msg'>
       <p>1. Use the arrow keys to change direction.<br />
@@ -151,10 +171,13 @@ function TutorialMsg(props) {
       <p>Press the space bar to begin.</p>
     </div>
   );
+
 }
 
 function GameOverMsg(props) {
+
   return <div className='game-over-msg'><p>Game over.</p></div>;
+
 }
 
 export default App;
