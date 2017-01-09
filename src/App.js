@@ -5,11 +5,7 @@ import $ from 'jquery';
 
 class App extends Component {
   render() {
-    return (
-      <div>
-        <Game />
-      </div>
-    );
+    return <Game />;
   }
 }
 
@@ -73,6 +69,17 @@ class Canvas extends Component {
 
   }
 
+  componentDidMount() {
+
+    // grab the canvas and the context
+    var c = document.getElementsByClassName("canvas")[0];
+    var ctx = c.getContext("2d");
+
+    var width = this.state.width, height = this.state.height;
+    ctx.canvas.width = width, ctx.canvas.height = height;
+
+  }
+
   draw(snake) {
 
     // grab the canvas and the context
@@ -96,7 +103,7 @@ class Canvas extends Component {
 
   render() {
 
-    return <canvas className="canvas"></canvas>
+    return <canvas className="canvas"></canvas>;
 
   }
 
@@ -213,7 +220,7 @@ class Game extends Component {
     var canvas = <Canvas />;
 
     return (
-      <div>
+      <div className="main-container">
         {canvas}
         {message}
       </div>
@@ -242,7 +249,7 @@ function TutorialMsg(props) {
 }
 
 function GameOverMsg(props) {
-  return <div className='game-over-msg'>Game over.</div>;
+  return <div className='game-over-msg'><p>Game over.</p></div>;
 }
 
 export default App;
