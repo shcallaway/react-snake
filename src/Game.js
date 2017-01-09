@@ -76,11 +76,17 @@ class Game extends Component {
       canvas.draw(snake, candy);
 
       if (collisions.walls(snake, canvas) || collisions.tail(snake)) {
+        
         this.blowUp();
+      
       } else if (collisions.candy(snake, candy)) {
+        
         this.incrementScore();
+        snake.grow();
+
         var c_height = canvas.state.height, c_width = canvas.state.width;
         candy.move(c_width, c_height);
+      
       }
 
     }.bind(this), speed, snake, canvas, score);

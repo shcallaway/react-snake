@@ -3,7 +3,7 @@ class Snake {
   constructor() {
 
     this.body = [[10, 10]];
-    this.max_length = 100;
+    this.max_length = 200;
     this.direction = 39;
   
   }
@@ -22,21 +22,21 @@ class Snake {
       default: return;
     }
 
-    this.grow([x, y]);
-
-  }  
-
-  grow(new_coordinates) {
-
     var body = this.body;
 
     // adds new coordinates to front of array
-    body.unshift(new_coordinates);
+    body.unshift([x, y]);
 
     // removes old coordinates from end of array if necessary
     if (body.length === this.max_length) body.pop();
 
     this.body = body;
+
+  }  
+
+  grow() {
+
+    this.max_length = this.max_length + 50;
   
   }
 }
