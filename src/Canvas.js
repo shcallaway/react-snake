@@ -40,7 +40,7 @@ class Canvas extends Component {
   }
 
   draw(snake, candy) {
-
+    
     this.clear();
     
     var ctx = this.getContext();
