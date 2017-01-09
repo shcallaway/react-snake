@@ -56,6 +56,24 @@ class Snake {
   }
 }
 
+class Candy {
+
+  constructor() {
+
+    this.location = [50, 50];
+
+  }
+
+  setLocation(c_width, c_height) {
+
+    // do a random number calculation for x and y
+    // where x < c_width & > 0 and y < c_height & > 0
+
+    this.location = [50, 50]
+  }
+
+}
+
 class Canvas extends Component {
 
   constructor() {
@@ -71,33 +89,47 @@ class Canvas extends Component {
 
   componentDidMount() {
 
-    // grab the canvas and the context
-    var c = document.getElementsByClassName("canvas")[0];
-    var ctx = c.getContext("2d");
-
+    var ctx = this.getContext()
     var width = this.state.width, height = this.state.height;
     ctx.canvas.width = width, ctx.canvas.height = height;
 
   }
 
-  draw(snake) {
+  getContext() {
 
-    // grab the canvas and the context
     var c = document.getElementsByClassName("canvas")[0];
-    var ctx = c.getContext("2d");
+    return c.getContext("2d");
+  
+  }
 
-    // clear the previous canvas and set up the new one
+  clear() {
+
+    var ctx = this.getContext();
     var width = this.state.width, height = this.state.height;
+
     ctx.canvas.width = width, ctx.canvas.height = height;
     ctx.clearRect(0, 0, width, height);
 
+  }
+
+  draw(snake, candy) {
+
+    this.clear();
+    
+    var ctx = this.getContext();
     var body = snake.body;
+
     for (var i = 0; i < body.length; i++) {
       var x = body[i][0], y = body[i][1];
-      ctx.moveTo(x, y)
-      ctx.lineTo(x + 1, y + 1)
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + 1, y + 1);
       ctx.stroke();
     }
+
+    var x = candy.location[0], y = candy.location[1];
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 1, y + 1);
+    ctx.stroke();
 
   }
 
@@ -116,6 +148,7 @@ class Game extends Component {
     this.state = {
       snake: new Snake(),
       canvas: new Canvas(),
+      candy: new Candy(),
       speed: 10,
       status: 0 // inactive
     }
@@ -148,13 +181,14 @@ class Game extends Component {
 
     var snake = this.state.snake;
     var canvas = this.state.canvas;
+    var candy = this.state.candy;
     var speed = this.state.speed;
 
     // might want to refactor speed so it behaves more logically
 
     INTERVAL = setInterval(function() {
       snake.move();
-      canvas.draw(snake);
+      canvas.draw(snake, candy);
       this.checkForCollision();
     }.bind(this), speed, snake, canvas);
 
