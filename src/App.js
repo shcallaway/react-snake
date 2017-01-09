@@ -5,6 +5,7 @@ import $ from 'jquery';
 
 import CollisionChecker from './CollisionChecker.js';
 import Snake from './Snake.js';
+import Candy from './Candy.js';
 
 class App extends Component {
   render() {
@@ -15,19 +16,6 @@ class App extends Component {
 var KEYCODES = [37, 38, 39, 40];
 var INTERVAL = null;
 var POINTS = 0;
-
-// this doesn't need to be a React component, right? nothing to render.
-
-class Candy {
-
-  constructor() {
-
-    // start with a candy that doesn't move or disappear
-    this.location = [200, 10];
-
-  }
-
-}
 
 class Canvas extends Component {
 
