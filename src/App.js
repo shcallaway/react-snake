@@ -36,15 +36,20 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      // points: 0,
       speed: 10,
-      status: 0 // inactive
+      status: 0 // {inactive: 0, active: 1, over: 2}
     }
 
   }
 
   componentDidMount() {
     
+    this.addKeyPressListener();
+
+  }
+
+  addKeyPressListener() {
+
     document.addEventListener("keydown", e => this.handleKeyPress(e), false);
 
   }
