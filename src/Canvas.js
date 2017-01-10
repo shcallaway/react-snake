@@ -8,8 +8,8 @@ class Canvas extends Component {
     super();
 
     this.state = {
-      width: 600,
-      height: 400,
+      width: 200,
+      height: 200,
     }
 
   }

@@ -24,7 +24,7 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: SPEEDS.test,
+      speed: SPEEDS.slow,
       status: 0 // {inactive: 0, active: 1, over: 2}
     }
 
@@ -62,6 +62,8 @@ class Game extends Component {
 
   begin() {
 
+    // get all them state variables
+
     var snake = this.state.snake;
     var canvas = this.state.canvas;
     var candy = this.state.candy;
@@ -69,15 +71,26 @@ class Game extends Component {
     var collisions = this.state.collisions;
     var score = this.state.score;
 
+    // initialize the candy location
+
+    var c_height = canvas.state.height, c_width = canvas.state.width;
+    candy.move(c_width, c_height);
+
     INTERVAL = setInterval(function() {
       
+      // move the snake and draw the canvas
+
       snake.move();
       canvas.draw(snake, candy);
+
+      // if collided with walls or tail, end the game
 
       if (collisions.walls(snake, canvas) || collisions.tail(snake)) {
 
         this.blowUp();
       
+      // else if collided with the candy, increment score, grow snake, and move candy
+
       } else if (collisions.candy(snake, candy)) {
         
         this.incrementScore();
