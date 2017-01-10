@@ -18,11 +18,11 @@ class Candy {
 
     // prevent the candy from going off-screen if too close to canvas edge
     
-    if (ran_x >= (c_width - this.size)) { ran_x++; }
-    if (ran_y >= (c_width - this.size)) { ran_y++; }
+    if (ran_x >= (c_width - this.size)) ran_x++;
+    if (ran_y >= (c_width - this.size)) ran_y++;
 
     this.location = [ran_x, ran_y];
-    
+
   }
 
 }

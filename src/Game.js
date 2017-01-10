@@ -9,7 +9,7 @@ import Canvas from './Canvas.js';
 import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';
 
 var KEYCODES = [37, 38, 39, 40];
-var SPEEDS = {slow: 30, medium: 20, fast: 10}
+var SPEEDS = {test: 200, slow: 30, medium: 20, fast: 10}
 var INTERVAL = null;
 
 class Game extends Component {
@@ -24,7 +24,7 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: SPEEDS.fast,
+      speed: SPEEDS.test,
       status: 0 // {inactive: 0, active: 1, over: 2}
     }
 

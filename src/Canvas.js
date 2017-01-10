@@ -40,9 +40,15 @@ class Canvas extends Component {
   }
 
   draw(snake, candy) {
-    
+
     this.clear();
-    
+    this.drawSnake(snake);
+    this.drawCandy(candy);
+
+  }
+
+  drawSnake(snake) {
+
     var ctx = this.getContext();
     var body = snake.body;
 
@@ -53,10 +59,22 @@ class Canvas extends Component {
       ctx.stroke();
     }
 
-    // draw candy as a rectangle
-    
+    // FOR BETTER IMPROVE PERFORMANCE
+    // iterate over snake body
+    // store x and y of current coordinate, go to next coordinate
+    // if new x matches old x, skip to next coordinate (sames goes for y)
+    // continue skipping until new x differs from old x
+    // draw a straight line from first xy to the current xy (the different ones)
+    // move to next coordinate, start over again
+
+  }
+
+  drawCandy(candy) {
+
+    var ctx = this.getContext();
+
     var x = candy.location[0], y = candy.location[1];
-    ctx.rect(x, y, 10,10);
+    ctx.rect(x, y, 10, 10);
     ctx.stroke();
 
   }
