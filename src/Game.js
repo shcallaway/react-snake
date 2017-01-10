@@ -5,8 +5,9 @@ import CollisionChecker from './CollisionChecker.js';
 import Snake from './Snake.js';
 import Candy from './Candy.js';
 import Canvas from './Canvas.js';
-
 import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';
+
+import BetterSnake from './BetterSnake.js';
 
 var KEYCODES = [37, 38, 39, 40];
 var SPEEDS = {test: 200, slow: 30, medium: 20, fast: 10}
