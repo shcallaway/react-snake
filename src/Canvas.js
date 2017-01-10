@@ -59,13 +59,11 @@ class Canvas extends Component {
       ctx.stroke();
     }
 
-    // FOR BETTER IMPROVE PERFORMANCE
-    // iterate over snake body
-    // store x and y of current coordinate, go to next coordinate
-    // if new x matches old x, skip to next coordinate (sames goes for y)
-    // continue skipping until new x differs from old x
-    // draw a straight line from first xy to the current xy (the different ones)
-    // move to next coordinate, start over again
+    // IDEA TO IMPROVE PERFORMANCE USING SECTION BUILDER
+    // create section builder object
+    // pass snake body to section builder build method
+    // store array of sections and iterate over it
+    // for each section, draw a line from [start_x, start_y] to [end_x, end_y]
 
   }
 
@@ -82,6 +80,46 @@ class Canvas extends Component {
   render() {
 
     return <canvas className="canvas"></canvas>;
+
+  }
+
+}
+
+class Section {
+
+  constructor() {
+
+    this.start_x;
+    this.start_y;
+    this.end_x;
+    this.end_y;
+    this.length;
+
+  }
+
+}
+
+class SectionBuilder {
+
+  build(body) {
+
+    // create an empty array (to be populated with sections)
+    // pass the body to buildOneSection and store the section
+    // chop off the portion of the body within the section (using section length)
+    // repeat until the body is empty
+    // return the array of sections
+
+  }
+
+  buildOneSection(body) {
+
+    // looks at first two entries in 2d array to determine the constant dimension (is x or y the same across pairs?)
+    // assigns section start_x and start_y to first coordinate pair
+    // iterates over the 2d array, incrementing section length on each iteration
+    // keeps going until pattern breaks (constant dimension changes)
+    // assigns section end_x and end_y to the coordinate pair just prior to the break
+    // assigns the section length to the calculated length
+    // returns the section
 
   }
 

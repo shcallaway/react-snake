@@ -39,6 +39,7 @@ class Snake {
     this.max_length = this.max_length + 50;
   
   }
+
 }
 
 export default Snake;
