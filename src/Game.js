@@ -94,7 +94,7 @@ class Game extends Component {
       } else if (collisions.candy(snake, candy)) {
         
         this.incrementScore();
-        // snake.grow(); BetterSnake growth not implemented right now
+        snake.increaseMaxLength();
 
         var c_height = canvas.state.height, c_width = canvas.state.width;
         candy.move(c_width, c_height);

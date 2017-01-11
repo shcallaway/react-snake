@@ -1,8 +1,6 @@
 var DIRECTIONS = {left: 37, up: 38, right: 39, down: 40};
-var MAX_LEN = 200;
 
 // TO-DO: 
-// 1. implement maximum length 
 // 2. implement tail collisions
 
 class Snake {
@@ -13,6 +11,7 @@ class Snake {
     this.verticies;
     this.length;
     this.direction;
+    this.max_len;
 
     this.initialize();
   
@@ -27,6 +26,7 @@ class Snake {
 
     this.length = 0;
     this.direction = DIRECTIONS.right;
+    this.max_len = 100;
 
   }
 
@@ -41,7 +41,7 @@ class Snake {
 
   atMaxLength() {
 
-    return (this.length >= MAX_LEN)
+    return (this.length >= this.max_len)
 
   }
 
@@ -84,59 +84,71 @@ class Snake {
 
     if (ult_vertex.x === penult_vertex.x) { // if x same, vertical line
 
-      if (ult_vertex.y < penult_vertex.y) {
-        
-        // create new ultimate vertex with incremented y coordinate
-        var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y + 1);
-        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
-
-        // remove old ultimate vertex and replace it
-        this.verticies.pop();
-        this.verticies.push(new_ult_vertex);
-
-      } else if (ult_vertex.y > penult_vertex.y) {
-
-        // create new ultimate vertex with incremented y coordinate
-        var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y - 1);
-        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
-
-        // remove old ultimate vertex and replace it
-        this.verticies.pop();
-        this.verticies.push(new_ult_vertex);
-
-      } else {
-
-        this.verticies.pop();
-
-      }
+      this.handleVerticalShrinkage(ult_vertex, penult_vertex);
 
     } else if (ult_vertex.y === penult_vertex.y) { // same y means horizontal line
 
-      if (ult_vertex.x < penult_vertex.x) {
-        
-        // create new ultimate vertex with incremented y coordinate
-        var new_ult_x = (ult_vertex.x + 1), new_ult_y = ult_vertex.y;
-        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+      this.handleHorizontalShrinkage(ult_vertex, penult_vertex);
 
-        // remove old ultimate vertex and replace it
-        this.verticies.pop();
-        this.verticies.push(new_ult_vertex);
+    }
 
-      } else if (ult_vertex.x > penult_vertex.x) {
+  }
 
-        // create new ultimate vertex with incremented y coordinate
-        var new_ult_x = (ult_vertex.x - 1), new_ult_y = ult_vertex.y;
-        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+  handleVerticalShrinkage(ult_vertex, penult_vertex) {
 
-        // remove old ultimate vertex and replace it
-        this.verticies.pop();
-        this.verticies.push(new_ult_vertex);
+    if (ult_vertex.y < penult_vertex.y) {
+      
+      // create new ultimate vertex with incremented y coordinate
+      var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y + 1);
+      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
 
-      } else {
+      // remove old ultimate vertex and replace it
+      this.verticies.pop();
+      this.verticies.push(new_ult_vertex);
 
-        this.verticies.pop();
+    } else if (ult_vertex.y > penult_vertex.y) {
 
-      }
+      // create new ultimate vertex with incremented y coordinate
+      var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y - 1);
+      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+
+      // remove old ultimate vertex and replace it
+      this.verticies.pop();
+      this.verticies.push(new_ult_vertex);
+
+    } else {
+
+      this.verticies.pop();
+
+    }
+
+  }
+
+  handleHorizontalShrinkage(ult_vertex, penult_vertex) {
+
+    if (ult_vertex.x < penult_vertex.x) {
+      
+      // create new ultimate vertex with incremented y coordinate
+      var new_ult_x = (ult_vertex.x + 1), new_ult_y = ult_vertex.y;
+      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+
+      // remove old ultimate vertex and replace it
+      this.verticies.pop();
+      this.verticies.push(new_ult_vertex);
+
+    } else if (ult_vertex.x > penult_vertex.x) {
+
+      // create new ultimate vertex with incremented y coordinate
+      var new_ult_x = (ult_vertex.x - 1), new_ult_y = ult_vertex.y;
+      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+
+      // remove old ultimate vertex and replace it
+      this.verticies.pop();
+      this.verticies.push(new_ult_vertex);
+
+    } else {
+
+      this.verticies.pop();
 
     }
 
@@ -161,6 +173,14 @@ class Snake {
   increaseLength() {
 
     if (!this.atMaxLength()) this.length++;
+
+  }
+
+  increaseMaxLength() {
+
+    // hard-code the growth rate for now
+
+    this.max_len += 20;
 
   }
 
