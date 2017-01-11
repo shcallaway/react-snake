@@ -23,7 +23,7 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: SPEEDS.fast,
+      speed: SPEEDS.slow,
       status: 0 // {inactive: 0, active: 1, over: 2}
     }
 
@@ -80,6 +80,7 @@ class Game extends Component {
       // move the snake and draw the canvas
 
       snake.updateHead();
+      snake.updateTail();
       canvas.draw(snake, candy);
 
       // if collided with walls or tail, end the game

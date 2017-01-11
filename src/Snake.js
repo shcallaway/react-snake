@@ -1,7 +1,8 @@
 var DIRECTIONS = {left: 37, up: 38, right: 39, down: 40};
+var MAX_LEN = 200;
 
 // TO-DO: 
-// 1. implement BetterSnake maximum length
+// 1. implement maximum length 
 // 2. implement tail collisions
 
 class Snake {
@@ -10,7 +11,7 @@ class Snake {
 
     this.head;
     this.verticies;
-    // this.max_length = 200;
+    this.length;
     this.direction;
 
     this.initialize();
@@ -24,6 +25,7 @@ class Snake {
     this.verticies = [];
     this.addNewVertex();
 
+    this.length = 0;
     this.direction = DIRECTIONS.right;
 
   }
@@ -34,6 +36,12 @@ class Snake {
 
     var new_vertex = this.head.copy();
     this.verticies.unshift(new_vertex)
+
+  }
+
+  atMaxLength() {
+
+    return (this.length >= MAX_LEN)
 
   }
 
@@ -61,6 +69,99 @@ class Snake {
     
     }
 
+    this.increaseLength();
+
+  }
+
+  updateTail() {
+
+    // don't shrink if not at max length
+
+    if (!this.atMaxLength()) return;
+
+    var ult_vertex = this.getUltimateVertex();
+    var penult_vertex = this.getPenultimateVertex();
+
+    if (ult_vertex.x === penult_vertex.x) { // if x same, vertical line
+
+      if (ult_vertex.y < penult_vertex.y) {
+        
+        // create new ultimate vertex with incremented y coordinate
+        var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y + 1);
+        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+
+        // remove old ultimate vertex and replace it
+        this.verticies.pop();
+        this.verticies.push(new_ult_vertex);
+
+      } else if (ult_vertex.y > penult_vertex.y) {
+
+        // create new ultimate vertex with incremented y coordinate
+        var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y - 1);
+        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+
+        // remove old ultimate vertex and replace it
+        this.verticies.pop();
+        this.verticies.push(new_ult_vertex);
+
+      } else {
+
+        this.verticies.pop();
+
+      }
+
+    } else if (ult_vertex.y === penult_vertex.y) { // same y means horizontal line
+
+      if (ult_vertex.x < penult_vertex.x) {
+        
+        // create new ultimate vertex with incremented y coordinate
+        var new_ult_x = (ult_vertex.x + 1), new_ult_y = ult_vertex.y;
+        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+
+        // remove old ultimate vertex and replace it
+        this.verticies.pop();
+        this.verticies.push(new_ult_vertex);
+
+      } else if (ult_vertex.x > penult_vertex.x) {
+
+        // create new ultimate vertex with incremented y coordinate
+        var new_ult_x = (ult_vertex.x - 1), new_ult_y = ult_vertex.y;
+        var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+
+        // remove old ultimate vertex and replace it
+        this.verticies.pop();
+        this.verticies.push(new_ult_vertex);
+
+      } else {
+
+        this.verticies.pop();
+
+      }
+
+    }
+
+  }
+
+  getPenultimateVertex() {
+
+    if (this.verticies.length === 1) {
+      return this.head.copy();
+    } else {
+      return this.verticies[this.verticies.length - 2].copy();
+    }
+
+  }
+
+  getUltimateVertex() {
+
+    return this.verticies[this.verticies.length - 1].copy();
+
+  }
+
+  increaseLength() {
+
+    if (!this.atMaxLength()) this.length++;
+
   }
 
   changeDirection(dir) {
@@ -79,7 +180,6 @@ class Snake {
     var string = '';
     for (var i = 0; i < this.verticies.length; i++) {
       string += '(' + this.verticies[i].x + ', ' + this.verticies[i].y + ') ';
-
     }
 
     console.log(string)
