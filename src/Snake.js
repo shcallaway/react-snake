@@ -20,6 +20,12 @@ class Snake {
   
   } 
 
+  reset() {
+
+    this.initialize();
+
+  }
+
   initialize() {
 
     this.head = new Vertex(10, 10);

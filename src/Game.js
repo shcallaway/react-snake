@@ -41,12 +41,35 @@ class Game extends Component {
 
   }
 
+  startOver() {
+
+    var canvas = this.state.canvas;
+    var snake = this.state.snake;
+
+    canvas.clear();
+    snake.reset();
+
+    this.setState({status: 0})
+    
+    this.resetScore()
+    this.begin();
+
+  }
+
   handleKeyPress(e) {
 
     // if game is inactive and key pressed was space bar, begin
     
-    var space_bar = (e.keyCode === 32), inactive = (this.state.status === 0);
-    if (space_bar && inactive ) this.begin();
+    var space_bar = (e.keyCode === 32);
+    var sts_inactive = (this.state.status === 0);
+    var sts_over = (this.state.status === 2);
+    var canvas = this.state.canvas;
+
+    if (space_bar && sts_inactive ) {
+      this.begin();
+    } else if (space_bar && sts_over) {
+      this.startOver();
+    }
 
     // determine if event keyCode represents a directional key
 
@@ -130,6 +153,16 @@ class Game extends Component {
     this.setState({score: score});
     var s = document.getElementsByClassName("score")[0];
     s.innerHTML = score;
+
+  }
+
+  resetScore() {
+
+    // could use jquery here
+
+    this.setState({score: 0});
+    var s = document.getElementsByClassName("score")[0];
+    s.innerHTML = 0;
 
   }
 
