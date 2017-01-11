@@ -24,4 +24,10 @@ function GameOverMsg(props) {
 
 }
 
-export { Score, TutorialMsg, GameOverMsg }
+function Header(props) {
+
+  return <div className='header'><h2>react-snake</h2></div>;
+
+}
+
+export { Score, TutorialMsg, GameOverMsg, Header }

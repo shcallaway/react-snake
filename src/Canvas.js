@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 
 var C_WIDTH = 800;
-var C_HEIGHT = 400;
+var C_HEIGHT = 200;
 
 class Canvas extends Component {
 

@@ -4,6 +4,7 @@ import './App.css';
 import $ from 'jquery';
 
 import Game from './Game.js';
+import { Header } from './InterfaceElements.js';
 
 class App extends Component {
   
@@ -11,6 +12,7 @@ class App extends Component {
 
     return ( 
       <div>
+        <Header />
         <Game />
       </div>
     );
