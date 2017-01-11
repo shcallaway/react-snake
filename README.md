@@ -1,1 +1,1 @@
-![Alt Text](https://github.com/shcallaway/react-snake/demo.gif)
+![Alt Text](https://github.com/shcallaway/react-snake/blob/master/demo.gif)
