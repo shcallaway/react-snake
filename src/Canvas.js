@@ -76,12 +76,6 @@ class Canvas extends Component {
 
     }
 
-    // IDEA TO IMPROVE PERFORMANCE USING SECTION BUILDER
-    // create section builder object
-    // pass snake body to section builder build method
-    // store array of sections and iterate over it
-    // for each section, draw a line from [start_x, start_y] to [end_x, end_y]
-
   }
 
   drawCandy(candy) {
@@ -111,32 +105,6 @@ class Section {
     this.end_x;
     this.end_y;
     this.length;
-
-  }
-
-}
-
-class SectionBuilder {
-
-  build(body) {
-
-    // create an empty array (to be populated with sections)
-    // pass the body to buildOneSection and store the section
-    // chop off the portion of the body within the section (using section length)
-    // repeat until the body is empty
-    // return the array of sections
-
-  }
-
-  buildOneSection(body) {
-
-    // looks at first two entries in 2d array to determine the constant dimension (is x or y the same across pairs?)
-    // assigns section start_x and start_y to first coordinate pair
-    // iterates over the 2d array, incrementing section length on each iteration
-    // keeps going until pattern breaks (constant dimension changes)
-    // assigns section end_x and end_y to the coordinate pair just prior to the break
-    // assigns the section length to the calculated length
-    // returns the section
 
   }
 

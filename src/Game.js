@@ -9,7 +9,7 @@ import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';
 
 import BetterSnake from './BetterSnake.js';
 
-var KEYCODES = [37, 38, 39, 40];
+var DIR_KEYCODES = [37, 38, 39, 40];
 var SPEEDS = {test: 200, slow: 30, medium: 20, fast: 10}
 var INTERVAL = null;
 
@@ -20,13 +20,12 @@ class Game extends Component {
     super();
 
     this.state = {
-      // snake: new Snake(),
       snake: new BetterSnake(),
       canvas: new Canvas(),
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: SPEEDS.slow,
+      speed: SPEEDS.fast,
       status: 0 // {inactive: 0, active: 1, over: 2}
     }
 
@@ -53,7 +52,7 @@ class Game extends Component {
 
     // determine if event keyCode represents a directional key
 
-    var dir_key = KEYCODES.indexOf(e.keyCode) === -1 ? false : true;
+    var dir_key = DIR_KEYCODES.indexOf(e.keyCode) === -1 ? false : true;
 
     if (dir_key) {
       var snake = this.state.snake;
@@ -140,13 +139,18 @@ class Game extends Component {
     var status = this.state.status;
 
     switch (status) {
+
       case 0: // inactive (display tutorial message)
         var message = <TutorialMsg />; break;
+
       case 1: // active (no messages)
         var message = null; break; 
+
       case 2: // over (display game over message)
         var message = <GameOverMsg />; break; 
+        
       default: return;
+    
     }
 
     var canvas = <Canvas />;

@@ -15,7 +15,7 @@ class BetterSnake {
 
   initialize() {
 
-    this.head = new CoordinatePair(10, 10);
+    this.head = new Vertex(10, 10);
 
     this.verticies = [];
     this.addNewVertex();
@@ -26,7 +26,9 @@ class BetterSnake {
 
   addNewVertex() {
 
-    var new_vertex = this.head.copyMe();
+    // copies are necessary so as to not accidentally modify vertexes when updating head
+
+    var new_vertex = this.head.copy();
     this.verticies.unshift(new_vertex)
 
   }
@@ -61,7 +63,7 @@ class BetterSnake {
 
     this.direction = dir;
 
-    // store a copy of the current head CoordinatePair as a vertex at the front of the array
+    // store a copy of the current head Vertex as a vertex at the front of the array
 
     this.addNewVertex();
     this.printVerticies();
@@ -82,7 +84,7 @@ class BetterSnake {
 
 }
 
-class CoordinatePair {
+class Vertex {
 
   constructor(x, y) {
 
@@ -91,9 +93,9 @@ class CoordinatePair {
 
   }
 
-  copyMe() {
+  copy() {
 
-    return new CoordinatePair(this.x, this.y)
+    return new Vertex(this.x, this.y)
 
   }
 
