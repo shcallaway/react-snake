@@ -8,17 +8,6 @@ function Score(props) {
 
 }
 
-function StartMenu(props) {
-
-  return (
-    <div>
-      <p>React Snake</p>
-      <button>Start</button>
-    </div>
-  );
-
-}
-
 function TutorialMsg(props) {
 
   return (
@@ -35,4 +24,4 @@ function GameOverMsg(props) {
 
 }
 
-export { Score, StartMenu, TutorialMsg, GameOverMsg }
+export { Score, TutorialMsg, GameOverMsg }
