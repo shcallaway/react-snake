@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
+var C_WIDTH = 800;
+var C_HEIGHT = 400;
+
 class Canvas extends Component {
 
   constructor() {
@@ -8,8 +11,8 @@ class Canvas extends Component {
     super();
 
     this.state = {
-      width: 200,
-      height: 200,
+      width: C_WIDTH,
+      height: C_HEIGHT
     }
 
   }

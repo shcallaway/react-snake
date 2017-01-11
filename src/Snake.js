@@ -3,6 +3,9 @@ var DIRECTIONS = {left: 37, up: 38, right: 39, down: 40};
 // TO-DO: 
 // 2. implement tail collisions
 
+var MAX_LENGTH = 300;
+var GROWTH_AMT = 50;
+
 class Snake {
   
   constructor() {
@@ -26,7 +29,7 @@ class Snake {
 
     this.length = 0;
     this.direction = DIRECTIONS.right;
-    this.max_len = 100;
+    this.max_len = MAX_LENGTH;
 
   }
 
@@ -180,7 +183,7 @@ class Snake {
 
     // hard-code the growth rate for now
 
-    this.max_len += 20;
+    this.max_len += GROWTH_AMT;
 
   }
 

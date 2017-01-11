@@ -23,7 +23,7 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: SPEEDS.slow,
+      speed: SPEEDS.fast,
       status: 0 // {inactive: 0, active: 1, over: 2}
     }
 
