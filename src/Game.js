@@ -7,8 +7,6 @@ import Candy from './Candy.js';
 import Canvas from './Canvas.js';
 import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';
 
-import BetterSnake from './BetterSnake.js';
-
 var DIR_KEYCODES = [37, 38, 39, 40];
 var SPEEDS = {test: 200, slow: 30, medium: 20, fast: 10}
 var INTERVAL = null;
@@ -20,7 +18,7 @@ class Game extends Component {
     super();
 
     this.state = {
-      snake: new BetterSnake(),
+      snake: new Snake(),
       canvas: new Canvas(),
       candy: new Candy(),
       collisions: new CollisionChecker(),
@@ -148,7 +146,7 @@ class Game extends Component {
 
       case 2: // over (display game over message)
         var message = <GameOverMsg />; break; 
-        
+
       default: return;
     
     }
