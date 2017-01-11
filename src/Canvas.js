@@ -59,8 +59,6 @@ class Canvas extends Component {
     ctx.lineTo(verticies[0].x, verticies[0].y);
     ctx.stroke();
 
-    // console.log('draw line from ' + head.x + ', ' + head.y + ' to ' + verticies[0].x + ', ' + verticies[0].y)
-
     // draw the other lines between verticies
 
     for (var i = 1; i < verticies.length; i++) {

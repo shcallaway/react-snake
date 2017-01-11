@@ -1,5 +1,10 @@
 var DIRECTIONS = {left: 37, up: 38, right: 39, down: 40};
 
+// TO-DO: 
+// 1. remove old snake, rename BetterSnake to Snake
+// 2. implement BetterSnake maximum length
+// 3. implement tail collisions
+
 class BetterSnake {
   
   constructor() {
