@@ -49,14 +49,31 @@ class Canvas extends Component {
 
   drawSnake(snake) {
 
-    var ctx = this.getContext();
-    var body = snake.body;
 
-    for (var i = 0; i < body.length; i++) {
-      var x = body[i][0], y = body[i][1];
-      ctx.moveTo(x, y);
-      ctx.lineTo(x + 1, y + 1);
+    var ctx = this.getContext();
+    var head = snake.head, verticies = snake.verticies;
+
+    // draw the line from head to the first vertex
+
+    ctx.moveTo(head.x, head.y);
+    ctx.lineTo(verticies[0].x, verticies[0].y);
+    ctx.stroke();
+
+    // console.log('draw line from ' + head.x + ', ' + head.y + ' to ' + verticies[0].x + ', ' + verticies[0].y)
+
+    // draw the other lines between verticies
+
+    for (var i = 1; i < verticies.length; i++) {
+
+      // grab the previous vertex
+
+      ctx.moveTo(verticies[i-1].x, verticies[i-1].y);
+
+      // draw a line to the current vertex
+
+      ctx.lineTo(verticies[i].x, verticies[i].y);
       ctx.stroke();
+
     }
 
     // IDEA TO IMPROVE PERFORMANCE USING SECTION BUILDER

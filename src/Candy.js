@@ -16,9 +16,6 @@ class Candy {
 
     // prevent the candy from going off-screen if too close to canvas edge
     
-    var ran_y = c_height - 3;
-    console.log('c_width: ' + c_width)
-
     if (ran_x >= (c_width - this.size)) (ran_x -= this.size);
     if (ran_y >= (c_height - this.size)) (ran_y -= this.size);
 

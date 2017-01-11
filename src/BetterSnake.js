@@ -1,11 +1,13 @@
+var DIRECTIONS = {left: 37, up: 38, right: 39, down: 40};
+
 class BetterSnake {
   
   constructor() {
 
     this.head;
-    this.verticies = []
+    this.verticies;
     // this.max_length = 200;
-    this.direction = 39;
+    this.direction;
 
     this.initialize();
   
@@ -13,36 +15,68 @@ class BetterSnake {
 
   initialize() {
 
-    var initial_pos = new CoordinatePair(10, 10);
-    this.head = initial_pos;
-    this.verticies.unshift(initial_pos);
+    this.head = new CoordinatePair(10, 10);
+
+    this.verticies = [];
+    this.addNewVertex();
+
+    this.direction = DIRECTIONS.right;
+
+  }
+
+  addNewVertex() {
+
+    var new_vertex = this.head.copyMe();
+    this.verticies.unshift(new_vertex)
 
   }
 
   updateHead() {
 
     switch (this.direction) {
+
       case 37: // left
         this.head.x--;
         break;
+
       case 38: // up
         this.head.y--;
         break;
+
       case 39: // right
         this.head.x++;
         break;
+
       case 40: // down
         this.head.y++;
         break;
+
       default: return;
+    
     }
 
   }
 
-  changeDirection() {
+  changeDirection(dir) {
 
-    // store the current CoordinatePair as a vertex
-    this.verticies.push(this.head)
+    this.direction = dir;
+
+    // store a copy of the current head CoordinatePair as a vertex at the front of the array
+
+    this.addNewVertex();
+    this.printVerticies();
+
+  }
+
+  printVerticies() {
+
+    var string = '';
+    for (var i = 0; i < this.verticies.length; i++) {
+      string += '(' + this.verticies[i].x + ', ' + this.verticies[i].y + ') ';
+
+    }
+
+    console.log(string)
 
   }
 
@@ -54,6 +88,12 @@ class CoordinatePair {
 
     this.x = x;
     this.y = y;
+
+  }
+
+  copyMe() {
+
+    return new CoordinatePair(this.x, this.y)
 
   }
 

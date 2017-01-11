@@ -3,23 +3,21 @@ class CollisionChecker {
   walls(snake, canvas) {
 
     var c_width = canvas.state.width, c_height = canvas.state.height;
-    var x = snake.body[0][0], y = snake.body[0][1];
+    var x = snake.head.x, y = snake.head.y;
+
+    // return true if snake head is at (or outside) canvas bounds
+
     return (x >= c_width || x <= 0 || y >= c_height || y <= 0);
 
   }
 
   tail(snake) {
 
-    var x = snake.body[0][0], y = snake.body[0][1];
+    var x = snake.head.x, y = snake.head.y;
 
-    // start at index 1 to skip the first coordinate pair (aka the "head")
-    
-    for (var i = 1; i < snake.body.length; i++) {
-      var tx = snake.body[i][0], ty = snake.body[i][1];
-      if (x === tx && y === ty) {
-        return true;
-      }
-    }
+    // this will be complicated because...
+    // you can no longer just check head against every coordinate in body
+    // disable tail collisions for the time being
 
     return false;
 
@@ -27,7 +25,7 @@ class CollisionChecker {
 
   candy(snake, candy) {
 
-    var sx = snake.body[0][0], sy = snake.body[0][1];
+    var sx = snake.head.x, sy = snake.head.y;
     var cx = candy.location[0], cy = candy.location[1];
 
     // width and height of candy object is hardcoded for now (at 10)

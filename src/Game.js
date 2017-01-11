@@ -20,7 +20,8 @@ class Game extends Component {
     super();
 
     this.state = {
-      snake: new Snake(),
+      // snake: new Snake(),
+      snake: new BetterSnake(),
       canvas: new Canvas(),
       candy: new Candy(),
       collisions: new CollisionChecker(),
@@ -56,7 +57,7 @@ class Game extends Component {
 
     if (dir_key) {
       var snake = this.state.snake;
-      snake.direction = e.keyCode;
+      snake.changeDirection(e.keyCode);
     }
 
   }
@@ -81,7 +82,7 @@ class Game extends Component {
       
       // move the snake and draw the canvas
 
-      snake.move();
+      snake.updateHead();
       canvas.draw(snake, candy);
 
       // if collided with walls or tail, end the game
@@ -95,7 +96,7 @@ class Game extends Component {
       } else if (collisions.candy(snake, candy)) {
         
         this.incrementScore();
-        snake.grow();
+        // snake.grow(); BetterSnake growth not implemented right now
 
         var c_height = canvas.state.height, c_width = canvas.state.width;
         candy.move(c_width, c_height);
