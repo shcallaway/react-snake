@@ -13,7 +13,7 @@ class CollisionChecker {
 
   tail(snake) {
 
-    var x = snake.head.x, y = snake.head.y;
+    // var x = snake.head.x, y = snake.head.y;
 
     // this will be complicated because...
     // you can no longer just check head against every coordinate in body

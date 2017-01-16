@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 var C_WIDTH = 800;
 var C_HEIGHT = 200;
@@ -36,7 +36,6 @@ class Canvas extends Component {
 
     var ctx = this.getContext();
     var width = this.state.width, height = this.state.height;
-
     ctx.canvas.width = width, ctx.canvas.height = height;
     ctx.clearRect(0, 0, width, height);
 
@@ -92,20 +91,6 @@ class Canvas extends Component {
   render() {
 
     return <canvas className="canvas"></canvas>;
-
-  }
-
-}
-
-class Section {
-
-  constructor() {
-
-    this.start_x;
-    this.start_y;
-    this.end_x;
-    this.end_y;
-    this.length;
 
   }
 
