@@ -13,7 +13,7 @@ React Snake is an implementation of the classic arcarde game using React and Nod
 
 ## Live Demo
 
-https://git.heroku.com/react-snake.git
+https://react-snake.herokuapp.com/
 
 ## Dependencies
 
