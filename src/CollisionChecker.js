@@ -13,11 +13,19 @@ class CollisionChecker {
 
   tail(snake) {
 
-    // var x = snake.head.x, y = snake.head.y;
+    var x1 = snake.head.x, y1 = snake.head.y;
+    var x2 = snake.verticies[0].x, y2 = snake.verticies[0].y;
 
-    // this will be complicated because...
-    // you can no longer just check head against every coordinate in body
-    // disable tail collisions for the time being
+    // check if the current line has crossed any previous lines
+
+    // criteria for two lines crossing:
+    // * the current line is on a different plane than the previous line (horizontal vs. vertical)
+    //  * if current line is horizontal (and the previous line is vertical): 
+    //    * the previous line falls within the x coords of the current line
+    //    * the current line falls within the y coords of the previous line
+    //  * if the current line is vertical (and the previous line is horizontal):
+    //    * the previous line falls within the y coords of the current line
+    //    * the current line falls within the x coords of the previous line
 
     return false;
 

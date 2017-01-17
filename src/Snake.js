@@ -53,6 +53,7 @@ class Snake {
   addNewVertex() {
 
     // copies are necessary so as to not accidentally modify vertexes when updating head
+    // new vertices get added to the front of the array... old ones popped off the back
 
     var new_vertex = this.head.copy();
     this.verticies.unshift(new_vertex)
