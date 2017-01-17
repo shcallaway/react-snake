@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-// import $ from 'jquery';
-
-var C_WIDTH = 600;
-var C_HEIGHT = 400;
-var S_COLOR = '#4850C9';
-var C_COLOR = '#4850C9';
+import { C_WIDTH, C_HEIGHT, S_COLOR, C_COLOR } from './constants.js';
 
 class Canvas extends Component {
 
@@ -87,9 +82,9 @@ class Canvas extends Component {
     var ctx = this.getContext();
 
     var x = candy.location[0], y = candy.location[1];
+    var size = candy.size;
     ctx.fillStyle = C_COLOR;
-    ctx.fillRect(x, y, 10, 10);
-    // ctx.stroke();
+    ctx.fillRect(x, y, size, size);
 
   }
 

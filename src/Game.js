@@ -6,8 +6,8 @@ import Candy from './Candy.js';
 import Canvas from './Canvas.js';
 import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';
 
-var DIR_KEYCODES = [37, 38, 39, 40];
-var SPEEDS = {test: 200, slow: 30, medium: 20, fast: 10}
+import { DIR_KEYCODES, SPEEDS } from './constants.js';
+
 var INTERVAL = null;
 
 class Game extends Component {
@@ -22,8 +22,8 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: SPEEDS.fast,
-      status: 0 // {inactive: 0, active: 1, over: 2}
+      speed: SPEEDS.medium,
+      status: 0 // { inactive: 0, active: 1, over: 2 }
     }
 
   }

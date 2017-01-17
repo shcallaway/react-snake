@@ -1,10 +1,21 @@
-var DIRECTIONS = {left: 37, up: 38, right: 39, down: 40};
+import { MAX_LENGTH, GROWTH_AMT, INITIAL_Y, INITIAL_X, DIRECTIONS } from './constants.js';
 
-// TO-DO: 
-// 2. implement tail collisions
+class Vertex {
 
-var MAX_LENGTH = 300;
-var GROWTH_AMT = 50;
+  constructor(x, y) {
+
+    this.x = x;
+    this.y = y;
+
+  }
+
+  copy() {
+
+    return new Vertex(this.x, this.y)
+
+  }
+
+}
 
 class Snake {
   
@@ -28,7 +39,7 @@ class Snake {
 
   initialize() {
 
-    this.head = new Vertex(10, 10);
+    this.head = new Vertex(INITIAL_X, INITIAL_Y);
 
     this.verticies = [];
     this.addNewVertex();
@@ -200,7 +211,6 @@ class Snake {
     // store a copy of the current head Vertex as a vertex at the front of the array
 
     this.addNewVertex();
-    this.printVerticies();
 
   }
 
@@ -212,23 +222,6 @@ class Snake {
     }
 
     console.log(string)
-
-  }
-
-}
-
-class Vertex {
-
-  constructor(x, y) {
-
-    this.x = x;
-    this.y = y;
-
-  }
-
-  copy() {
-
-    return new Vertex(this.x, this.y)
 
   }
 

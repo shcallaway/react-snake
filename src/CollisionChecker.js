@@ -27,12 +27,11 @@ class CollisionChecker {
 
     var sx = snake.head.x, sy = snake.head.y;
     var cx = candy.location[0], cy = candy.location[1];
-
-    // width and height of candy object is hardcoded for now (at 10)
+    var size = candy.size;
 
     var xtrue, ytrue;
-    (sx >= cx && sx <= cx + 10) ? (xtrue = true) : (xtrue = false);
-    (sy >= cy && sy <= cy + 10) ? (ytrue = true) : (ytrue = false);
+    (sx >= cx && sx <= cx + size) ? (xtrue = true) : (xtrue = false);
+    (sy >= cy && sy <= cy + size) ? (ytrue = true) : (ytrue = false);
 
     return (xtrue && ytrue);
 

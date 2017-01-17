@@ -1,9 +1,11 @@
+import { CANDY_SIZE } from './constants.js';
+
 class Candy {
 
   constructor() {
 
     this.location;
-    this.size = 10;
+    this.size = CANDY_SIZE;
 
   }
 
