@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import $ from 'jquery';
 
 import CollisionChecker from './CollisionChecker.js';
 import Snake from './Snake.js';

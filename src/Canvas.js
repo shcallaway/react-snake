@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 // import $ from 'jquery';
 
-var C_WIDTH = 800;
-var C_HEIGHT = 200;
+var C_WIDTH = 600;
+var C_HEIGHT = 400;
+var S_COLOR = '#4850C9';
+var C_COLOR = '#4850C9';
 
 class Canvas extends Component {
 
@@ -59,6 +61,7 @@ class Canvas extends Component {
 
     ctx.moveTo(head.x, head.y);
     ctx.lineTo(verticies[0].x, verticies[0].y);
+    ctx.strokeStyle = S_COLOR;
     ctx.stroke();
 
     // draw the other lines between verticies
@@ -69,9 +72,10 @@ class Canvas extends Component {
 
       ctx.moveTo(verticies[i-1].x, verticies[i-1].y);
 
-      // draw a line to the current vertex
+      // draw a line to the current vertex (set the color too)
 
       ctx.lineTo(verticies[i].x, verticies[i].y);
+      ctx.strokeStyle = S_COLOR;
       ctx.stroke();
 
     }
@@ -83,8 +87,9 @@ class Canvas extends Component {
     var ctx = this.getContext();
 
     var x = candy.location[0], y = candy.location[1];
-    ctx.rect(x, y, 10, 10);
-    ctx.stroke();
+    ctx.fillStyle = C_COLOR;
+    ctx.fillRect(x, y, 10, 10);
+    // ctx.stroke();
 
   }
 
