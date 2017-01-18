@@ -13,19 +13,17 @@ class CollisionChecker {
 
   tail(snake) {
 
-    var x1 = snake.head.x, y1 = snake.head.y;
-    var x2 = snake.verticies[0].x, y2 = snake.verticies[0].y;
+    // IDEA:
 
-    // check if the current line has crossed any previous lines
+    // get coordinates of the head
+    // interate over each line (aka pair of coordinates) including line between head  and first vertex
+    // build an array of the the coordinates that make up the line (one dimension should be constant)
+    // compare head coordinates to every coordinate pair in the array
+    // if match, collision occured ... return true
+    // if no match, continue until the array is empty
+    // repeat for the next line
 
-    // criteria for two lines crossing:
-    // * the current line is on a different plane than the previous line (horizontal vs. vertical)
-    //  * if current line is horizontal (and the previous line is vertical): 
-    //    * the previous line falls within the x coords of the current line
-    //    * the current line falls within the y coords of the previous line
-    //  * if the current line is vertical (and the previous line is horizontal):
-    //    * the previous line falls within the y coords of the current line
-    //    * the current line falls within the x coords of the previous line
+    // if no matches at all, return false
 
     return false;
 
@@ -40,6 +38,8 @@ class CollisionChecker {
     var xtrue, ytrue;
     (sx >= cx && sx <= cx + size) ? (xtrue = true) : (xtrue = false);
     (sy >= cy && sy <= cy + size) ? (ytrue = true) : (ytrue = false);
+
+    // return true if the snake head within the candy dimensions
 
     return (xtrue && ytrue);
 
