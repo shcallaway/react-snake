@@ -1,3 +1,39 @@
+import { Vertex } from './Snake.js';
+
+class LineUtility {
+
+  getLowerBoundX(start, end) {
+
+    return (start.x > end.x ? end.x : start.x)
+
+  }
+
+  getUpperBoundX(start, end) {
+
+    return (start.x > end.x ? start.x : end.x)
+
+  }
+
+  getLowerBoundY(start, end) {
+
+    return (start.y > end.y ? end.y : start.y)
+
+  }
+
+  getUpperBoundY(start, end) {
+
+    return (start.y > end.y ? start.y : end.y)
+
+  }
+
+  valueInRange(value, lower_bound, upper_bound) {
+
+    return (value >= lower_bound && value <= upper_bound ? true : false) 
+
+  }
+
+}
+
 class CollisionChecker {
 
   walls(snake, canvas) {
@@ -13,19 +49,60 @@ class CollisionChecker {
 
   tail(snake) {
 
-    // IDEA:
+    var head = snake.head.copy();
 
-    // get coordinates of the head
-    // interate over each line (aka pair of coordinates) including line between head  and first vertex
-    // build an array of the the coordinates that make up the line (one dimension should be constant)
-    // compare head coordinates to every coordinate pair in the array
-    // if match, collision occured ... return true
-    // if no match, continue until the array is empty
-    // repeat for the next line
+    for (var i = 0, j = 1; j < snake.verticies.length; i++, j++) {
 
-    // if no matches at all, return false
+      var line_start = snake.verticies[i], line_end = snake.verticies[j];
+      var collision = this.checkCollisionWithLine(head.x, head.y, line_start, line_end);
+
+      if (collision) return true;
+      
+    }
+
 
     return false;
+
+  }
+
+  checkCollisionWithLine(head_x, head_y, line_start, line_end) {
+
+    var util = new LineUtility();
+    var lower_bound_x = util.getLowerBoundX(line_start, line_end);
+    var upper_bound_x = util.getUpperBoundX(line_start, line_end);
+    var lower_bound_y = util.getLowerBoundY(line_start, line_end);
+    var upper_bound_y = util.getUpperBoundY(line_start, line_end);
+
+    var x_in_range = util.valueInRange(head_x, lower_bound_x, upper_bound_x)
+    var y_in_range = util.valueInRange(head_y, lower_bound_y, upper_bound_y)
+
+    if (x_in_range && y_in_range) return true;
+
+  }
+
+  checkHorizontal(start, end) {
+
+    return (start.y === end.y) ? true : false;
+
+  }
+
+  horizontalLineLength(start, end) {
+
+    if (start.y > end.y) {
+      return start.y - end.y
+    } else {
+      return end.y - start.y
+    }
+
+  }
+
+  verticalLineLength(start, end) {
+
+    if (start.x > end.x) {
+      return start.x - end.x
+    } else {
+      return end.x - start.x
+    }
 
   }
 
