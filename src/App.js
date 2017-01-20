@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import Game from './Game.js';
-import { Header } from './InterfaceElements.js';
+import Game from './game.js';
+import { Header } from './interface.js';
 
 class App extends Component {
   

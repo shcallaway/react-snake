@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import CollisionChecker from './CollisionChecker.js';
+import CollisionChecker from './collision_checker.js';
 import Snake from './Snake.js';
-import Candy from './Candy.js';
+import Candy from './candy.js';
 import Canvas from './Canvas.js';
-import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';
+import { GameOverMsg, TutorialMsg, Score } from './interface.js';
 
 import { DIR_KEYCODES, SPEEDS } from './constants.js';
 
