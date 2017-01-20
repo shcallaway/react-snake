@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import CollisionChecker from './CollisionChecker.js';
-import { Snake } from './Snake.js';
+import Snake from './Snake.js';
 import Candy from './Candy.js';
 import Canvas from './Canvas.js';
 import { GameOverMsg, TutorialMsg, Score } from './InterfaceElements.js';

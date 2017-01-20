@@ -1,21 +1,5 @@
 import { MAX_LENGTH, GROWTH_AMT, INITIAL_Y, INITIAL_X, DIRECTIONS } from './constants.js';
-
-class Vertex {
-
-  constructor(x, y) {
-
-    this.x = x;
-    this.y = y;
-
-  }
-
-  copy() {
-
-    return new Vertex(this.x, this.y)
-
-  }
-
-}
+import Vertex from './vertex.js';
 
 class Snake {
   
@@ -228,4 +212,5 @@ class Snake {
 
 }
 
-export { Snake, Vertex };
+// export { Snake, Vertex };
+export default Snake;
