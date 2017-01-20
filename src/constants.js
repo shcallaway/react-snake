@@ -1,6 +1,7 @@
 // Game
 export const DIR_KEYCODES = [37, 38, 39, 40];
 export const SPEEDS = {test: 200, slow: 30, medium: 20, fast: 10}
+export const STATUSES = {inactive: 0, active: 1, over: 2}
 
 // Snake
 export const DIRECTIONS = {left: 37, up: 38, right: 39, down: 40};

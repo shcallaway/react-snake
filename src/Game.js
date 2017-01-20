@@ -6,7 +6,7 @@ import Candy from './candy.js';
 import Canvas from './canvas.js';
 import { GameOverMsg, TutorialMsg, Score } from './interface.js';
 
-import { DIR_KEYCODES, SPEEDS } from './constants.js';
+import { DIR_KEYCODES, SPEEDS, STATUSES } from './constants.js';
 
 var INTERVAL = null;
 
@@ -22,8 +22,8 @@ class Game extends Component {
       candy: new Candy(),
       collisions: new CollisionChecker(),
       score: 0,
-      speed: SPEEDS.medium,
-      status: 0 // { inactive: 0, active: 1, over: 2 }
+      speed: SPEEDS.fast,
+      status: STATUSES.inactive
     }
 
   }
@@ -48,7 +48,7 @@ class Game extends Component {
     canvas.clear();
     snake.reset();
 
-    this.setState({status: 0})
+    this.setState({status: STATUSES.inactive})
     
     this.resetScore()
     this.begin();
@@ -60,9 +60,8 @@ class Game extends Component {
     // if game is inactive and key pressed was space bar, begin
     
     var space_bar = (e.keyCode === 32);
-    var sts_inactive = (this.state.status === 0);
-    var sts_over = (this.state.status === 2);
-    var canvas = this.state.canvas;
+    var sts_inactive = (this.state.status === STATUSES.inactive);
+    var sts_over = (this.state.status === STATUSES.over);
 
     if (space_bar && sts_inactive ) {
       this.begin();
@@ -90,12 +89,6 @@ class Game extends Component {
     var candy = this.state.candy;
     var speed = this.state.speed;
     var collisions = this.state.collisions;
-    var score = this.state.score;
-
-    // initialize the candy location
-
-    var c_height = canvas.state.height, c_width = canvas.state.width;
-    candy.move(c_width, c_height);
 
     INTERVAL = setInterval(function() {
       
@@ -118,14 +111,13 @@ class Game extends Component {
         this.incrementScore();
         snake.increaseMaxLength();
 
-        var c_height = canvas.state.height, c_width = canvas.state.width;
-        candy.move(c_width, c_height);
+        candy.move();
       
       }
 
-    }.bind(this), speed, snake, canvas, score);
+    }.bind(this), speed);
 
-    this.setState({status: 1}); // active
+    this.setState({status: STATUSES.active}); // active
 
   }
 
@@ -140,7 +132,7 @@ class Game extends Component {
     clearInterval(INTERVAL);
     INTERVAL = null;
 
-    this.setState({status: 2}); // over
+    this.setState({status: STATUSES.over}); // over
 
   }
 
@@ -167,18 +159,18 @@ class Game extends Component {
 
   render() {
 
-    var status = this.state.status;
+    var status = this.state.status, message;
 
     switch (status) {
 
-      case 0: // inactive (display tutorial message)
-        var message = <TutorialMsg />; break;
+      case STATUSES.inactive: // inactive (display tutorial message)
+        message = <TutorialMsg />; break;
 
-      case 1: // active (no messages)
-        var message = null; break; 
+      case STATUSES.active: // active (no messages)
+        message = null; break; 
 
-      case 2: // over (display game over message)
-        var message = <GameOverMsg />; break; 
+      case STATUSES.over: // over (display game over message)
+        message = <GameOverMsg />; break; 
 
       default: return;
     
