@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import CollisionChecker from './collision_checker.js';
-import Snake from './Snake.js';
+import Snake from './snake.js';
 import Candy from './candy.js';
-import Canvas from './Canvas.js';
+import Canvas from './canvas.js';
 import { GameOverMsg, TutorialMsg, Score } from './interface.js';
 
 import { DIR_KEYCODES, SPEEDS } from './constants.js';
