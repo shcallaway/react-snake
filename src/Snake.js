@@ -101,11 +101,14 @@ class Snake {
 
   handleVerticalShrinkage(ult_vertex, penult_vertex) {
 
+    var new_ult_x, new_ult_y, new_ult_vertex;
+
     if (ult_vertex.y < penult_vertex.y) {
       
       // create new ultimate vertex with incremented y coordinate
-      var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y + 1);
-      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+      new_ult_x = ult_vertex.x;
+      new_ult_y = ult_vertex.y + 1;
+      new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
 
       // remove old ultimate vertex and replace it
       this.verticies.pop();
@@ -114,8 +117,9 @@ class Snake {
     } else if (ult_vertex.y > penult_vertex.y) {
 
       // create new ultimate vertex with incremented y coordinate
-      var new_ult_x = ult_vertex.x, new_ult_y = (ult_vertex.y - 1);
-      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+      new_ult_x = ult_vertex.x;
+      new_ult_y = ult_vertex.y - 1;
+      new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
 
       // remove old ultimate vertex and replace it
       this.verticies.pop();
@@ -131,11 +135,14 @@ class Snake {
 
   handleHorizontalShrinkage(ult_vertex, penult_vertex) {
 
+    var new_ult_x, new_ult_y, new_ult_vertex;
+
     if (ult_vertex.x < penult_vertex.x) {
       
       // create new ultimate vertex with incremented y coordinate
-      var new_ult_x = (ult_vertex.x + 1), new_ult_y = ult_vertex.y;
-      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+      new_ult_x = ult_vertex.x + 1;
+      new_ult_y = ult_vertex.y;
+      new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
 
       // remove old ultimate vertex and replace it
       this.verticies.pop();
@@ -144,8 +151,9 @@ class Snake {
     } else if (ult_vertex.x > penult_vertex.x) {
 
       // create new ultimate vertex with incremented y coordinate
-      var new_ult_x = (ult_vertex.x - 1), new_ult_y = ult_vertex.y;
-      var new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
+      new_ult_x = ult_vertex.x - 1;
+      new_ult_y = ult_vertex.y;
+      new_ult_vertex = new Vertex(new_ult_x, new_ult_y);
 
       // remove old ultimate vertex and replace it
       this.verticies.pop();
@@ -212,5 +220,4 @@ class Snake {
 
 }
 
-// export { Snake, Vertex };
 export default Snake;
