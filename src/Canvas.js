@@ -16,9 +16,11 @@ class Canvas extends Component {
 
   componentDidMount() {
 
-    var ctx = this.getContext()
-    var width = this.state.width, height = this.state.height;
-    ctx.canvas.width = width, ctx.canvas.height = height;
+    var ctx = this.getContext();
+    var width = this.state.width;
+    var height = this.state.height;
+    ctx.canvas.width = width;
+    ctx.canvas.height = height;
 
   }
 
@@ -32,8 +34,10 @@ class Canvas extends Component {
   clear() {
 
     var ctx = this.getContext();
-    var width = this.state.width, height = this.state.height;
-    ctx.canvas.width = width, ctx.canvas.height = height;
+    var width = this.state.width;
+    var height = this.state.height;
+    ctx.canvas.width = width;
+    ctx.canvas.height = height;
     ctx.clearRect(0, 0, width, height);
 
   }
@@ -53,22 +57,18 @@ class Canvas extends Component {
     var head = snake.head, verticies = snake.verticies;
 
     // draw the line from head to the first vertex
-
     ctx.moveTo(head.x, head.y);
     ctx.lineTo(verticies[0].x, verticies[0].y);
     ctx.strokeStyle = S_COLOR;
     ctx.stroke();
 
     // draw the other lines between verticies
-
     for (var i = 1; i < verticies.length; i++) {
 
       // grab the previous vertex
-
       ctx.moveTo(verticies[i-1].x, verticies[i-1].y);
 
       // draw a line to the current vertex (set the color too)
-
       ctx.lineTo(verticies[i].x, verticies[i].y);
       ctx.strokeStyle = S_COLOR;
       ctx.stroke();
@@ -81,7 +81,8 @@ class Canvas extends Component {
 
     var ctx = this.getContext();
 
-    var x = candy.location[0], y = candy.location[1];
+    var x = candy.location[0];
+    var y = candy.location[1];
     var size = candy.size;
     ctx.fillStyle = C_COLOR;
     ctx.fillRect(x, y, size, size);
