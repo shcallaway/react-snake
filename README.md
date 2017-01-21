@@ -4,28 +4,33 @@
 
 React Snake is an exercise for getting acquainted with the React framework. It was initialized using the `create-react-app` boilerplate, which is available [here](https://github.com/facebookincubator/create-react-app). 
 
-The most difficult part of building React Snake was dealing with the clearing and re-drawing of the HTML5 canvas in an efficient manner. At first, the "snake" was implemented as a series of points; This taxed the browser as the snake grew over the lifetime of a game. So I reimagined the snake as a series of verticies, stored each vertex, and drew lines between them. The vertex-based approached proved a much more efficient way of using HTML5 Canvas, but added significant complexity to the calculation of collisions. 
-
-## Table of Contents
+## Contents
 
 - [React Snake](#react-snake)
-- [Table of Contents](#table-of-contents)
-- [Demonstration](#demonstration)
+- [Contents](#contents)
+- [Demo](#demo)
+- [Challenges](#challenges)
 - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 
-## Demonstration
+## Demo
 
 https://react-snake.herokuapp.com/
 
+## Challenges
+
+The most difficult part of building React Snake was dealing with the clearing and re-drawing of the HTML5 canvas in an efficient manner. At first, the "snake" was implemented as a series of points; This taxed the browser as the snake grew over the lifetime of a game. So I reimagined the snake as a series of verticies, stored each vertex, and drew lines between them. The vertex-based approached proved a much more efficient way of using HTML5 Canvas, but added significant complexity to the calculation of collisions. 
+
+Another difficult part involved checking for tail collisions with a vertex-based snake. I could not just iterate over every coordinate in the snake body and check it against the snake head, as I could with a point-based snake. I had to devise some logic for determining whether the head vertex fell upon a given line. To do so, I captured the upper and lower x and y bounds of the line. (Of course, since the lines are always either perfectly horizontal or perfectly vertical, one of these dimensions will be fixed so that, in the case of a horizontal line, for example, the lower and upper y bound will be the same.) After capturing the x and y bounds of the line, I check whether the x and y of the snake head falls within them. If so, a collision has occured. 
+
 ## Dependencies
 
-1. Node v7.3.0
-2. npm (Node Package Manager) v3.10.10
-
-... to be continued
+1. nodejs v7.3.0
+2. npm v3.10.10
+3. react v15.4.1
+4. react-dom v15.4.1
 
 ## Installation
 
