@@ -1,6 +1,9 @@
 import { MAX_LENGTH, GROWTH_AMT, INITIAL_Y, INITIAL_X, DIRECTIONS } from './constants.js';
 import Vertex from './vertex.js';
 
+// disable warnings for instance var declarations without assignments
+/* eslint-disable no-unused-expressions */
+
 class Snake {
   
   constructor() {
@@ -54,22 +57,18 @@ class Snake {
 
     switch (this.direction) {
 
-      case 37: // left
+      case DIRECTIONS.left:
         this.head.x--;
         break;
-
-      case 38: // up
+      case DIRECTIONS.up:
         this.head.y--;
         break;
-
-      case 39: // right
+      case DIRECTIONS.right:
         this.head.x++;
         break;
-
-      case 40: // down
+      case DIRECTIONS.down:
         this.head.y++;
         break;
-
       default: return;
     
     }
@@ -88,11 +87,8 @@ class Snake {
     var penult_vertex = this.getPenultimateVertex();
 
     if (ult_vertex.x === penult_vertex.x) { // if x same, vertical line
-
       this.handleVerticalShrinkage(ult_vertex, penult_vertex);
-
     } else if (ult_vertex.y === penult_vertex.y) { // same y means horizontal line
-
       this.handleHorizontalShrinkage(ult_vertex, penult_vertex);
 
     }
@@ -191,8 +187,6 @@ class Snake {
 
   increaseMaxLength() {
 
-    // hard-code the growth rate for now
-
     this.max_len += GROWTH_AMT;
 
   }
@@ -202,7 +196,6 @@ class Snake {
     this.direction = dir;
 
     // store a copy of the current head Vertex as a vertex at the front of the array
-
     this.addNewVertex();
 
   }
