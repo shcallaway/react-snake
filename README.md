@@ -17,10 +17,10 @@ React Snake is an exercise for getting acquainted with the React framework. It w
 
 ## Demo
 
-The app is hosted at two locations:
+The app is available at two locations:
 
-https://shcallaway.github.io/react-snake
-https://react-snake.herokuapp.com/
+* https://shcallaway.github.io/react-snake
+* https://react-snake.herokuapp.com/
 
 ## Challenges
 
@@ -48,7 +48,7 @@ Another difficult part involved checking for tail collisions with a vertex-based
 
 ## License
 
-https://github.com/shcallaway/react-snake/blob/master/LICENSE.md
+[GNU General Public License](https://github.com/shcallaway/react-snake/blob/master/LICENSE.md)
 
 ## Todo
 
@@ -57,4 +57,3 @@ https://github.com/shcallaway/react-snake/blob/master/LICENSE.md
 * Fix canvas bug where trailing line is drawn thinner
 * Add persistent back end with top ten high scores
 * Make it prettier :)
-
